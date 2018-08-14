@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #2982167 by osopolar, drunken monkey: Added a Drush command for re-indexing
+  specific entities.
 - #1783746 by das-peter, sammys, SpadXIII, drunken monkey, ruloweb, KarlShea,
   heshanlk, Anas_maw, pinkonomy, Damien Tournoud, rudiedirkx: Added support
   for the "(not) between" operator.

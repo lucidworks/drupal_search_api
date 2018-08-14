@@ -95,6 +95,18 @@ function search_api_drush_command() {
     'aliases' => array('sapi-r'),
   );
 
+  $items['search-api-reindex-items'] = array(
+    'description' => 'Force re-indexing of one or more specific items.',
+    'examples' => array(
+      'drush search-api-reindex-items node 12,34,56' => dt('Schedule the nodes with ID 12, 34 and 56 for re-indexing.'),
+    ),
+    'arguments' => array(
+      'entity_type' => dt('The entity type whose items should be re-indexed.'),
+      'entities' => dt('The entities of the given entity type to be re-indexed.'),
+    ),
+    'aliases' => array('sapi-ri'),
+  );
+
   $items['search-api-clear'] = array(
     'description' => 'Clear one or all search indexes and mark them for re-indexing.',
     'examples' => array(
@@ -445,6 +457,33 @@ function drush_search_api_reindex($index_id = NULL) {
   foreach ($indexes as $index) {
     $index->reindex();
     drush_log(dt('!index was successfully marked for re-indexing.', array('!index' => $index->machine_name)), 'ok');
+  }
+}
+
+/**
+ * Marks the given entities as needing to be re-indexed.
+ */
+function drush_search_api_reindex_items($entity_type, $entities) {
+  if (search_api_drush_static(__FUNCTION__)) {
+    return;
+  }
+
+  // Validate list of entity ids.
+  if (!empty($entities) && !preg_match('#^[0-9]*(,[0-9]*)*$#', $entities)) {
+    drush_log(dt('Entities should be a single numeric entity ID or a list with the numeric entity IDs separated by comma.'), 'error');
+    return;
+  }
+
+  $ids = explode(',', $entities);
+
+  if (!empty($ids)) {
+    search_api_track_item_change($entity_type, $ids);
+
+    $combined_ids = array();
+    foreach ($ids as $id) {
+      $combined_ids[] = $entity_type . '/' . $id;
+    }
+    search_api_track_item_change('multiple', $combined_ids);
   }
 }
 
