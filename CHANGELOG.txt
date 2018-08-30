@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #2989578 by KarlShea, drunken monkey: Fixed Views exposed form fields for
+  "not between" operator.
 - #2982167 by osopolar, drunken monkey: Added a Drush command for re-indexing
   specific entities.
 - #1783746 by das-peter, sammys, SpadXIII, drunken monkey, ruloweb, KarlShea,

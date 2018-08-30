@@ -63,22 +63,30 @@ class SearchApiViewsHandlerFilterNumeric extends SearchApiViewsHandlerFilter {
     $form['value']['#tree'] = TRUE;
 
     $single_field_operators = $this->operator_options();
-    unset($single_field_operators['empty'], $single_field_operators['not empty'], $single_field_operators['between']);
+    unset(
+      $single_field_operators['empty'],
+      $single_field_operators['not empty'],
+      $single_field_operators['between'],
+      $single_field_operators['not between']
+    );
+    $between_operators = array('between', 'not between');
 
     // We have to make some choices when creating this as an exposed
     // filter form. For example, if the operator is locked and thus
     // not rendered, we can't render dependencies; instead we only
     // render the form items we need.
     $which = 'all';
+    $source = NULL;
     if (!empty($form['operator'])) {
       $source = ($form['operator']['#type'] == 'radios') ? 'radio:options[operator]' : 'edit-options-operator';
     }
 
+    $identifier = NULL;
     if (!empty($form_state['exposed'])) {
       $identifier = $this->options['expose']['identifier'];
       if (empty($this->options['expose']['use_operator']) || empty($this->options['expose']['operator_id'])) {
         // Exposed and locked.
-        $which = ($this->operator == 'between') ? 'minmax' : 'value';
+        $which = in_array($this->operator, $between_operators) ? 'minmax' : 'value';
       }
       else {
         $source = 'edit-' . drupal_html_id($this->options['expose']['operator_id']);
@@ -95,7 +103,7 @@ class SearchApiViewsHandlerFilterNumeric extends SearchApiViewsHandlerFilter {
         '#default_value' => $this->value['value'],
         '#dependency' => array($source => array_keys($single_field_operators)),
       );
-      if (!empty($form_state['exposed']) && !isset($form_state['input'][$identifier]['value'])) {
+      if ($identifier && !isset($form_state['input'][$identifier]['value'])) {
         $form_state['input'][$identifier]['value'] = $this->value['value'];
       }
     }
@@ -108,7 +116,7 @@ class SearchApiViewsHandlerFilterNumeric extends SearchApiViewsHandlerFilter {
         '#size' => 30,
         '#default_value' => isset($this->value['value']) ? $this->value['value'] : '',
       );
-      if (!empty($form_state['exposed']) && !isset($form_state['input'][$identifier])) {
+      if ($identifier && !isset($form_state['input'][$identifier])) {
         $form_state['input'][$identifier] = isset($this->value['value']) ? $this->value['value'] : '';
       }
     }
@@ -128,8 +136,8 @@ class SearchApiViewsHandlerFilterNumeric extends SearchApiViewsHandlerFilter {
       );
 
       if ($which == 'all') {
-        $form['value']['min']['#dependency'] = array($source => array('between'));
-        $form['value']['max']['#dependency'] = array($source => array('between'));
+        $form['value']['min']['#dependency'] = array($source => $between_operators);
+        $form['value']['max']['#dependency'] = array($source => $between_operators);
       }
 
       if (!empty($form_state['exposed']) && !isset($form_state['input'][$identifier]['min'])) {
