@@ -288,6 +288,16 @@ function search_api_views_views_plugins() {
     );
   }
 
+  if (module_exists('views_content_cache')) {
+    $ret['cache']['search_api_views_content_cache'] = array(
+      'title' => t('Search-specific content-based'),
+      'help' => t("Cache Search API views based on content updates. (Requires Views Content Cache)"),
+      'base' => $bases,
+      'handler' => 'SearchApiViewsContentCache',
+      'uses options' => TRUE,
+    );
+  }
+
   return $ret;
 }
 

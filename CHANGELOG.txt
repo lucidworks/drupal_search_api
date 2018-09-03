@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #2325917 by guillaumev, drunken monkey: Added a Views cache plugin based on
+  Views Content Cache.
 - #2989578 by KarlShea, drunken monkey: Fixed Views exposed form fields for
   "not between" operator.
 - #2982167 by osopolar, drunken monkey: Added a Drush command for re-indexing
