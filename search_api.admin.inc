@@ -528,7 +528,7 @@ function theme_search_api_server(array $variables) {
 }
 
 /**
- * Form constructor for completely clearing a server.
+ * Form constructor for server operations.
  *
  * @param SearchApiServer $server
  *   The server for which the form is displayed.
@@ -543,15 +543,39 @@ function search_api_server_status_form(array $form, array &$form_state, SearchAp
   $form['clear'] = array(
     '#type' => 'submit',
     '#value' => t('Delete all indexed data on this server'),
+    '#submit' => array('search_api_server_status_form_clear_submit')
   );
+
+  $count = $server->enabled ? search_api_server_tasks_count($server) : 0;
+  if ($count) {
+    $message = format_plural($count, '@count pending task must be executed before indexing.', '@count pending tasks must be executed before indexing.');
+    drupal_set_message($message, 'warning', FALSE);
+    $form['execute_pending_tasks'] = array(
+      '#type' => 'submit',
+      '#value' => t('Execute all pending tasks on this server'),
+      '#submit' => array('search_api_server_status_form_execute_pending_tasks_submit')
+    );
+  }
 
   return $form;
 }
 
 /**
-* Form submission handler for search_api_server_status_form().
-*/
-function search_api_server_status_form_submit(array $form, array &$form_state) {
+ * Form submission handler for search_api_server_status_form().
+ *
+ * Used for the "Execute all pending tasks" button.
+ */
+function search_api_server_status_form_execute_pending_tasks_submit($form, &$form_state) {
+  $server_id = $form_state['server']->machine_name;
+  $form_state['redirect'] = "admin/config/search/search_api/server/$server_id/execute-tasks";
+}
+
+/**
+ * Form submission handler for search_api_server_status_form().
+ *
+ * Used for the "Delete all indexed data" button.
+ */
+function search_api_server_status_form_clear_submit(array $form, array &$form_state) {
   $server_id = $form_state['server']->machine_name;
   $form_state['redirect'] = "admin/config/search/search_api/server/$server_id/clear";
 }

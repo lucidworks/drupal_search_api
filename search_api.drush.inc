@@ -121,6 +121,19 @@ function search_api_drush_command() {
     'aliases' => array('sapi-c'),
   );
 
+  $items['search-api-execute-tasks'] = array(
+    'description' => 'Execute all pending tasks or all for a given server.',
+    'examples' => array(
+      'drush search-api-execute-tasks my_solr_server' => dt('Execute all pending tasks on !server', array('!server' => 'my_solr_server')),
+      'drush sapi-et my_solr_server' => dt('Execute all pending tasks on !server', array('!server' => 'my_solr_server')),
+      'drush sapi-et' => dt('Execute all pending tasks on all servers.')
+    ),
+    'arguments' => array(
+      'server_id' => dt('The numeric ID or machine name of a server to execute tasks on.'),
+    ),
+    'aliases' => array('sapi-et')
+  );
+
   $items['search-api-set-index-server'] = array(
     'description' => 'Set the search server used by a given index.',
     'examples' => array(
@@ -502,6 +515,34 @@ function drush_search_api_clear($index_id = NULL) {
   foreach ($indexes as $index) {
     $index->clear();
     drush_log(dt('!index was successfully cleared.', array('!index' => $index->machine_name)), 'ok');
+  }
+}
+
+/**
+ * Execute all pending tasks or all for a given server.
+ */
+function drush_search_api_execute_tasks($server_id = NULL) {
+  if (search_api_drush_static(__FUNCTION__)) {
+    return;
+  }
+
+  // Attempt to load the associated server.
+  $server = NULL;
+  if ($server_id) {
+    $servers = search_api_drush_get_server($server_id);
+    if (!$servers) {
+      return;
+    }
+    $server = reset($servers);
+  }
+
+  // Process batch op with drush.
+  try {
+    search_api_execute_pending_tasks($server);
+    drush_log(dt('!server tasks have been successfully executed.', array('!server' => $server->machine_name ? $server->machine_name : 'All')), 'ok');
+  }
+  catch (SearchApiException $e) {
+    drush_log($e->getMessage(), 'error');
   }
 }
 
