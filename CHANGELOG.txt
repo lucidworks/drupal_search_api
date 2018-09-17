@@ -1,5 +1,5 @@
-Search API 1.x, dev (xxxx-xx-xx):
----------------------------------
+Search API 1.25 (2018-09-17):
+-----------------------------
 - #2408727 by swim, drunken monkey: Added a batch operation for executing
   pending tasks.
 - #2325917 by guillaumev, drunken monkey: Added a Views cache plugin based on
