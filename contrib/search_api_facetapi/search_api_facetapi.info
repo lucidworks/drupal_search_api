@@ -1,7 +1,7 @@
-name = Search facets
+name = Search Facets
 description = "Integrate the Search API with the Facet API to provide facetted searches."
-dependencies[] = search_api
-dependencies[] = facetapi
+dependencies[] = search_api:search_api
+dependencies[] = facetapi:facetapi
 core = 7.x
 package = Search
 

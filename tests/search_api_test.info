@@ -1,10 +1,9 @@
-
-name = Search API test
+name = Search API Test
 description = "Some dummy implementations for testing the Search API."
 core = 7.x
 package = Search
 
-dependencies[] = search_api
+dependencies[] = search_api:search_api
 
 files[] = search_api_test.module
 

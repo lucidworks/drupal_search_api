@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3002043 by alonaoneill, drunken monkey: Fixed module name capitalization and
+  dependency namespacing in .info files.
 - #2990940 by drunken monkey: Fixed multi-byte handling of Highlight processor.
 - #3001424 by drunken monkey: Fixed notice when configuring the More Like This
   contextual filter.
