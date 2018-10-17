@@ -151,7 +151,17 @@ class SearchApiViewsHandlerFilterDate extends SearchApiViewsHandlerFilterNumeric
       }
     }
     else {
-      $value = isset($this->value[0]) ? $this->value[0]['value'] : $this->value['value'];
+      // Apparently, the value can come in here in various way.
+      $value = $this->value;
+      if (isset($value[0]['value'])) {
+        $value = $value[0]['value'];
+      }
+      elseif (isset($value[0])) {
+        $value = $value[0];
+      }
+      elseif (isset($value['value'])) {
+        $value = $value['value'];
+      }
       $v = is_numeric($value) ? $value : strtotime($value, REQUEST_TIME);
       if ($v !== FALSE) {
         $this->query->condition($this->real_field, $v, $this->operator, $this->options['group']);
