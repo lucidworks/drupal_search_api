@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3009744 by evgeny.chernyavskiy, drunken monkey: Fixed wrong "continue" in
+  search_api_server_tasks_check().
 - #3003742 by Jelle_S, drunken monkey: Fixed problems with Views date filters.
 - #3002043 by alonaoneill, drunken monkey: Fixed module name capitalization and
   dependency namespacing in .info files.
