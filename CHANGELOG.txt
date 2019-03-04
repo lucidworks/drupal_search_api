@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #2324023 by drumm, drunken monkey: Changed Views field definition for to
+  float.
 - #3008849 by pamatt, drunken monkey: Fixed non-exposed numeric and date
   filters in Views.
 - #3009744 by evgeny.chernyavskiy, drunken monkey: Fixed wrong "continue" in
