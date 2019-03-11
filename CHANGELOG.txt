@@ -1,3 +1,6 @@
+Search API 1.x, dev (xxxx-xx-xx):
+---------------------------------
+
 Search API 1.26 (2019-03-11):
 -----------------------------
 - #2324023 by drumm, drunken monkey: Changed Views field definition for to
