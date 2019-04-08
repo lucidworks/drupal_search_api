@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3040980 by drunken monkey: Fixed undefined index notice in Highlighting
+  processor.
 
 Search API 1.26 (2019-03-11):
 -----------------------------

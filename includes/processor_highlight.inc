@@ -360,7 +360,7 @@ class SearchApiHighlight extends SearchApiAbstractProcessor {
         // and ends with a space.
         $matches = array();
 
-        if (!$this->options['highlight_partial']) {
+        if (empty($this->options['highlight_partial'])) {
           $found_position = FALSE;
           $regex = '/' . static::$boundary . preg_quote($key, '/') . static::$boundary . '/iu';
           if (preg_match($regex, ' ' . $text . ' ', $matches, PREG_OFFSET_CAPTURE, $look_start[$key])) {
