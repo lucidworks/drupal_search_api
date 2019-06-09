@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3056882 by drunken monkey, WalkingDexter: Fixed highlighting in some edge
+  cases.
 - #3041704 by drunken monkey: Added multi-type support for entity status filter
   processors.
 - #2290019 by n3or, azinck, drunken monkey: Added support for OR operator to

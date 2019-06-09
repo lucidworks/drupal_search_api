@@ -270,7 +270,7 @@ class SearchApiHighlight extends SearchApiAbstractProcessor {
     $keywords = drupal_map_assoc(array_filter($keywords));
     // Remove quotes from keywords.
     foreach ($keywords as $key) {
-      $keywords[$key] = trim($key, "'\"");
+      $keywords[$key] = trim($key, "'\" ");
     }
     return drupal_map_assoc(array_filter($keywords));
   }
@@ -298,7 +298,7 @@ class SearchApiHighlight extends SearchApiAbstractProcessor {
         $keywords += $this->flattenKeysArray($key);
       }
       else {
-        $keywords[$key] = $key;
+        $keywords[$key] = trim($key);
       }
     }
 
