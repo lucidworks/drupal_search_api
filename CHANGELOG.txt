@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3070125 by chrisclark, drunken monkey: Fixed Views "Reset" button validating
+  minimum keywords length.
 - #2378945 by DamienMcKenna, drunken monkey, capysara, JPHuxley, minorOffense:
   Added option to keep facets when submitting Views exposed form.
 - #3035977 by das-peter, drunken monkey: Fixed edge case problems with "Entity
