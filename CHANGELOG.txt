@@ -1,5 +1,6 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3081180 by mibfire, drunken monkey: Fixed HTML filter sometimes leaving whitespace.
 - #3070125 by chrisclark, drunken monkey: Fixed Views "Reset" button validating
   minimum keywords length.
 - #2378945 by DamienMcKenna, drunken monkey, capysara, JPHuxley, minorOffense:
