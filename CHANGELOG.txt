@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3096993 by KarlShea, drunken monkey: Fixed Views "between" filters with only
+  maximum value.
 - #3081180 by mibfire, drunken monkey: Fixed HTML filter sometimes leaving whitespace.
 - #3070125 by chrisclark, drunken monkey: Fixed Views "Reset" button validating
   minimum keywords length.
