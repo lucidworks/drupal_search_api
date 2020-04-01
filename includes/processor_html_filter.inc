@@ -157,7 +157,7 @@ class SearchApiHtmlFilter extends SearchApiAbstractProcessor {
   protected function decodeHtml($token) {
     $token = html_entity_decode($token, ENT_QUOTES, 'UTF-8');
     // Remove any multiple/leading/trailing spaces we might have introduced.
-    $token = trim(preg_replace('/\s+/u', ' ', $token));
+    $token = trim(preg_replace('/[\pZ\pC]+/u', ' ', $token));
     return $token;
   }
 
