@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3122167 by pandaski, drunken monkey: Provided a processor for excluding
+  private file entities from being indexed.
 - #3119271 by mibfire, drunken monkey: Fixed incomplete whitespace detection in
   HTML filter.
 - #3052798 by drunken monkey, smhnaji: Fixed errors on duplicate tracking of
