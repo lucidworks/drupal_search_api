@@ -947,7 +947,12 @@ function search_api_entity_delete($entity, $type) {
  * "Comment access" data alteration.
  */
 function search_api_node_access_records_alter(&$grants, $node) {
-  foreach (search_api_index_load_multiple(FALSE) as $index) {
+  $conditions = array(
+    'enabled' => 1,
+    'read_only' => 0,
+  );
+  $indexes = search_api_index_load_multiple(FALSE, $conditions);
+  foreach ($indexes as $index) {
     $item_ids = array();
     if (!empty($index->options['data_alter_callbacks']['search_api_alter_node_access']['status'])) {
       $item_id = $index->datasource()->getItemId($node);
@@ -965,8 +970,11 @@ function search_api_node_access_records_alter(&$grants, $node) {
     }
 
     if ($item_ids) {
-      $indexes = array($index->machine_name => $index);
-      search_api_track_item_change_for_indexes($index->item_type, $item_ids, $indexes);
+      search_api_track_item_change_for_indexes(
+        $index->item_type,
+        $item_ids,
+        array($index->machine_name => $index)
+      );
     }
   }
 }
@@ -3193,7 +3201,9 @@ function _search_api_index_queued_items() {
     if ($queue) {
       $indexes = search_api_index_load_multiple(array_keys($queue));
       foreach ($indexes as $index_id => $index) {
-        search_api_index_specific_items($index, $queue[$index_id]);
+        if ($index->enabled && !$index->read_only) {
+          search_api_index_specific_items($index, $queue[$index_id]);
+        }
       }
     }
 
