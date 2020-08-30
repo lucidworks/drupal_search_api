@@ -1,5 +1,7 @@
 Search API 1.x, dev (xxxx-xx-xx):
 ---------------------------------
+- #3132404 by janadam, klausi, drunken monkey: Fixed support for latest Date
+  module version.
 - #3123171 by drunken monkey: Fixed wrong Views filter handler used for URI
   fields.
 - #3109880 by drunken monkey: Fixed unnecessary processing of disabled indexes.
