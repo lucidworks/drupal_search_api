@@ -116,7 +116,7 @@ class Tokenizer extends FieldsProcessorPluginBase {
    */
   protected function processField(FieldInterface $field) {
     parent::processField($field);
-
+    dump('here...');
     foreach ($field->getValues() as $value) {
       if ($value instanceof TextValueInterface) {
         $value->setProperty('tokenized');

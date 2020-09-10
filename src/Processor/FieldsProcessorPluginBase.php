@@ -324,7 +324,6 @@ abstract class FieldsProcessorPluginBase extends ProcessorPluginBase implements 
   protected function processField(FieldInterface $field) {
     $values = $field->getValues();
     $type = $field->getType();
-
     foreach ($values as $i => &$value) {
       // We restore the field's type for each run of the loop since we need the
       // unchanged one as long as the current field value hasn't been updated.
