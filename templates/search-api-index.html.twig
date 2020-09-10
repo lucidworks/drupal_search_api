@@ -2,7 +2,7 @@
 /**
  * @file
  * Default theme implementation for displaying a search index.
- *
+ * LUCIDWORKS CHANGED
  * Available variables:
  * - table: The index info table.
  * - description: The index description.
@@ -15,9 +15,5 @@
 #}
 {% if description %}
   <p class="description">{{ description|nl2br }}</p>
-{% endif %}
-{% if index_progress %}
-  <h3>{{ 'Index status'|t }}</h3>
-  <div class="search-api-index-status">{{ index_progress }}</div>
 {% endif %}
 {{ table }}

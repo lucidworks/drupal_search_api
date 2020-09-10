@@ -21,7 +21,7 @@ class SearchApiStandard extends FieldPluginBase implements MultiItemsFieldHandle
    */
   public function render_item($count, $item) {
     $type = $this->definition['filter_type'] ?? 'plain';
-    // APPBASE CHANGED
+    // LUCIDWORKS CHANGED
     return $this->sanitizeValue($item['value'], 'xss_admin');
   }
 

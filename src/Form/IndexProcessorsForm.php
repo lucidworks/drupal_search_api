@@ -132,7 +132,9 @@ class IndexProcessorsForm extends EntityForm {
       $discouraged_processors = array_flip($discouraged_processors);
       $discouraged_warning = '<br /><strong>' . $this->t('It is recommended not to use this processor with the selected server.') . '</strong>';
     }
-
+    // LUCIDWORK CHANGED
+    $form["#markup"] = '<h3>Processor is not required in case of fusion server</h3>';
+    $form["#access"] = FALSE;
     $form['#tree'] = TRUE;
     $form['#attached']['library'][] = 'search_api/drupal.search_api.processors';
     $form['#title'] = $this->t('Manage processors for search index %label', ['%label' => $this->entity->label()]);
@@ -175,6 +177,8 @@ class IndexProcessorsForm extends EntityForm {
     $form['weights'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Processor order'),
+      // LUCIDWORK CHANGED
+      '#access' => FALSE,
     ];
     // Order enabled processors per stage.
     foreach ($stages as $stage => $description) {
@@ -381,7 +385,8 @@ class IndexProcessorsForm extends EntityForm {
         ]);
       }
     }
-
+    // LUCIDWORK CHANGED
+    return [];
     return $processors;
   }
 

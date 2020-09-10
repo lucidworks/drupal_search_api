@@ -166,7 +166,6 @@ class IndexForm extends EntityForm {
     ];
 
     $form['#attached']['library'][] = 'search_api/drupal.search_api.admin_css';
-
     $form['datasources'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Datasources'),
@@ -185,7 +184,7 @@ class IndexForm extends EntityForm {
     ];
     $datasource_options = [];
     foreach ($this->pluginHelper->createDatasourcePlugins($index) as $datasource_id => $datasource) {
-      if ($datasource->isHidden()) {
+      if ($datasource->isHidden() || $datasource_id !== "solr_document") {
         continue;
       }
       $datasource_options[$datasource_id] = Utility::escapeHtml($datasource->label());
@@ -193,7 +192,6 @@ class IndexForm extends EntityForm {
     }
     asort($datasource_options, SORT_NATURAL | SORT_FLAG_CASE);
     $form['datasources']['#options'] = $datasource_options;
-
     $form['datasource_configs'] = [
       '#type' => 'container',
       '#attributes' => [
@@ -313,22 +311,22 @@ class IndexForm extends EntityForm {
       '#type' => 'checkbox',
       '#title' => $this->t('Read only'),
       '#description' => $this->t('Do not write to this index or track the status of items in this index.'),
-      '#default_value' => $index->isReadOnly(),
+      '#default_value' => TRUE,
       '#parents' => ['read_only'],
     ];
-    $form['options']['index_directly'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Index items immediately'),
-      '#description' => $this->t('Immediately index new or updated items instead of waiting for the next cron run. This might have serious performance drawbacks and is generally not advised for larger sites.'),
-      '#default_value' => $index->getOption('index_directly'),
-    ];
-    $form['options']['cron_limit'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Cron batch size'),
-      '#description' => $this->t('Set how many items will be indexed at once when indexing items during a cron run. "0" means that no items will be indexed by cron for this index, "-1" means that cron should index all items at once.'),
-      '#default_value' => $index->getOption('cron_limit'),
-      '#size' => 4,
-    ];
+    // $form['options']['index_directly'] = [
+    //   '#type' => 'checkbox',
+    //   '#title' => $this->t('Index items immediately'),
+    //   '#description' => $this->t('Immediately index new or updated items instead of waiting for the next cron run. This might have serious performance drawbacks and is generally not advised for larger sites.'),
+    //   '#default_value' => FALSE,
+    // ];
+    // $form['options']['cron_limit'] = [
+    //   '#type' => 'textfield',
+    //   '#title' => $this->t('Cron batch size'),
+    //   '#description' => $this->t('Set how many items will be indexed at once when indexing items during a cron run. "0" means that no items will be indexed by cron for this index, "-1" means that cron should index all items at once.'),
+    //   '#default_value' => $index->getOption('cron_limit'),
+    //   '#size' => 4,
+    // ];
   }
 
   /**

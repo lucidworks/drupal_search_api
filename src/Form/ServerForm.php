@@ -161,7 +161,7 @@ class ServerForm extends EntityForm {
       if (count($backend_options) == 1) {
         $server->set('backend', key($backend_options));
       }
-      // APPBASE CHANGED
+      // LUCIDWORKS CHANGED
       // $form['backend'] = [
       //   '#type' => 'radios',
       //   '#title' => $this->t('Backend'),
@@ -215,7 +215,7 @@ class ServerForm extends EntityForm {
       $backend = $server->getBackend();
       $form_state->set('backend', $backend->getPluginId());
       if ($backend instanceof PluginFormInterface) {
-        // APPBASE CHANGED
+        // LUCIDWORKS CHANGED
         // if ($form_state->isRebuilding()) {
         //   $this->messenger->addWarning($this->t('Please configure the selected backend.'));
         // }

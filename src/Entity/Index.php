@@ -363,13 +363,10 @@ class Index extends ConfigEntityBase implements IndexInterface {
    */
   public function getDatasource($datasource_id) {
     $datasources = $this->getDatasources();
-    // dump($datasources);
-    // dump($datasource_id);
     if (empty($datasources[$datasource_id])) {
       $index_label = $this->label();
       throw new SearchApiException("The datasource with ID '$datasource_id' could not be retrieved for index '$index_label'.");
     }
-    // dump($datasources[$datasource_id]);
     return $datasources[$datasource_id];
   }
 

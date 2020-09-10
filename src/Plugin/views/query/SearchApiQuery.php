@@ -586,12 +586,10 @@ class SearchApiQuery extends QueryPluginBase {
       $view->execute_time = microtime(TRUE) - $start;
 
       // Trigger pager postExecute().
-      // dump($view->result);
       $view->pager->postExecute($view->result);
       $view->pager->updatePageInfo();
     }
     catch (\Exception $e) {
-      // dump($e);
       $this->abort($e->getMessage());
       // Recursion to get the same error behaviour as above.
       $this->execute($view);
@@ -646,7 +644,7 @@ class SearchApiQuery extends QueryPluginBase {
     $count = 0;
 
     // First, unless disabled, check access for all entities in the results.
-    // APPBASE CHANGED
+    // LUCIDWORKS CHANGED
     // if (!$this->options['skip_access']) {
     //   $account = $this->getAccessAccount();
     //   // If search items are not loaded already, pre-load them now in bulk to
@@ -661,22 +659,21 @@ class SearchApiQuery extends QueryPluginBase {
     foreach ($results as $item_id => $result) {
       $values = [];
       $values['_item'] = $result;
-      // APPBASE CHANGED
-      // try {
-      //   $object = $result->getOriginalObject();
-      //   if ($object) {
-      //     $values['_object'] = $object;
-      //     $values['_relationship_objects'][NULL] = [$object];
-      //   }
-      // }
-      // catch (SearchApiException $e) {
-      //   // Can't actually be thrown here, but catch for the static analyzer's
-      //   // sake.
-      // }
+      // LUCIDWORKS CHANGED
+      try {
+        $object = $result->getOriginalObject();
+        if ($object) {
+          $values['_object'] = $object;
+          $values['_relationship_objects'][NULL] = [$object];
+        }
+      }
+      catch (SearchApiException $e) {
+        // Can't actually be thrown here, but catch for the static analyzer's
+        // sake.
+      }
 
       // Gather any properties from the search results.
-      // dump($result->getFields());die();
-      // APPBASE CHANGED
+      // LUCIDWORKS CHANGED
       foreach ($result->getFields(FALSE) as $field_id => $field) {
         if ($field->getValues()) {
           $path = $field->getCombinedPropertyPath();
@@ -697,9 +694,7 @@ class SearchApiQuery extends QueryPluginBase {
           }
           $values[$path] = $field->getValues(); 
         }
-        // $values[$field_id] = $field->getValues();
       }
-      // dump($values);
       $values['index'] = $count++;
       
       $view->result[] = new ResultRow($values);
