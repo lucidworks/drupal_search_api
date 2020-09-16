@@ -1,5 +1,5 @@
 {
-  "name": "drupal/search_api",
+  "name": "lucidworks/search_api",
   "description": "Provides a generic framework for modules offering search capabilities.",
   "type": "drupal-module",
   "homepage": "https://www.drupal.org/project/search_api",
