@@ -126,7 +126,7 @@ class ServerForm extends EntityForm {
     $form['status'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enabled'),
-      '#description' => $this->t('Only enabled servers can index items or execute searches.'),
+      '#description' => $this->t('Only enabled servers can execute searches.'),
       '#default_value' => $server->status(),
     ];
     $form['description'] = [
@@ -161,7 +161,8 @@ class ServerForm extends EntityForm {
       if (count($backend_options) == 1) {
         $server->set('backend', key($backend_options));
       }
-      $form['backend'] = [
+      // LUCIDWORKS CHANGE
+      /* $form['backend'] = [
         '#type' => 'radios',
         '#title' => $this->t('Backend'),
         '#description' => $this->t('Choose a backend to use for this server.'),
@@ -177,6 +178,7 @@ class ServerForm extends EntityForm {
         ],
       ];
       $form['backend'] += $descriptions;
+      */
     }
     else {
       $url = 'https://www.drupal.org/docs/8/modules/search-api/getting-started/server-backends-and-features';
@@ -214,9 +216,10 @@ class ServerForm extends EntityForm {
       $backend = $server->getBackend();
       $form_state->set('backend', $backend->getPluginId());
       if ($backend instanceof PluginFormInterface) {
-        if ($form_state->isRebuilding()) {
-          $this->messenger->addWarning($this->t('Please configure the selected backend.'));
-        }
+        // LUCIDWORKS CHANGE
+        // if ($form_state->isRebuilding()) {
+        //  $this->messenger->addWarning($this->t('Please configure the selected backend.'));
+        // }
         // Attach the backend plugin configuration form.
         $backend_form_state = SubformState::createForSubform($form['backend_config'], $form, $form_state);
         $form['backend_config'] = $backend->buildConfigurationForm($form['backend_config'], $backend_form_state);

@@ -21,7 +21,9 @@ class SearchApiStandard extends FieldPluginBase implements MultiItemsFieldHandle
    */
   public function render_item($count, $item) {
     $type = $this->definition['filter_type'] ?? 'plain';
-    return $this->sanitizeValue($item['value'], $type);
+    // LUCIDWORKS CHANGE
+    // only admin type allows keeping the HTML tags intact. Other types will sanitize, in effect preventing highlighted fragments returned by Fusion to work as intended.
+    return $this->sanitizeValue($item['value'], 'xss_admin');
   }
 
 }

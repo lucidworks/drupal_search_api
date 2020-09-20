@@ -652,7 +652,8 @@ class SearchApiQuery extends QueryPluginBase {
     $count = 0;
 
     // First, unless disabled, check access for all entities in the results.
-    if (!$this->options['skip_access']) {
+    // LUCIDWORKS CHANGE
+    /* if (!$this->options['skip_access']) {
       $account = $this->getAccessAccount();
       // If search items are not loaded already, pre-load them now in bulk to
       // avoid them being individually loaded inside checkAccess().
@@ -662,7 +663,7 @@ class SearchApiQuery extends QueryPluginBase {
           unset($results[$item_id]);
         }
       }
-    }
+    } */
 
     foreach ($results as $item_id => $result) {
       $values = [];

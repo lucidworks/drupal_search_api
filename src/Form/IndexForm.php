@@ -185,7 +185,9 @@ class IndexForm extends EntityForm {
     ];
     $datasource_options = [];
     foreach ($this->pluginHelper->createDatasourcePlugins($index) as $datasource_id => $datasource) {
-      if ($datasource->isHidden()) {
+      // LUCIDWORKS CHANGE
+      // We're hiding all other sources except for solr_document as they don't get indexed to Fusion
+      if ($datasource->isHidden() || $datasource_id !== "solr_document") {
         continue;
       }
       $datasource_options[$datasource_id] = Utility::escapeHtml($datasource->label());
@@ -313,9 +315,12 @@ class IndexForm extends EntityForm {
       '#type' => 'checkbox',
       '#title' => $this->t('Read only'),
       '#description' => $this->t('Do not write to this index or track the status of items in this index.'),
-      '#default_value' => $index->isReadOnly(),
+      '#default_value' => TRUE,
       '#parents' => ['read_only'],
     ];
+    // LUCIDWORKS CHANGE
+    // Removing code related to indexing ops
+    /* 
     $form['options']['index_directly'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Index items immediately'),
@@ -329,6 +334,7 @@ class IndexForm extends EntityForm {
       '#default_value' => $index->getOption('cron_limit'),
       '#size' => 4,
     ];
+    */
   }
 
   /**

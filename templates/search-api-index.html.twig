@@ -11,13 +11,10 @@
  * @see template_preprocess_search_api_index()
  *
  * @ingroup themeable
+ * LUCIDWORKS CHANGE
  */
 #}
 {% if description %}
   <p class="description">{{ description|nl2br }}</p>
-{% endif %}
-{% if index_progress %}
-  <h3>{{ 'Index status'|t }}</h3>
-  <div class="search-api-index-status">{{ index_progress }}</div>
 {% endif %}
 {{ table }}
