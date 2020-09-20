@@ -1,6 +1,6 @@
 {
-  "name": "drupal/search_api",
-  "description": "Provides a generic framework for modules offering search capabilities.",
+  "name": "lucidworks/drupal_search_api",
+  "description": "Provides a generic framework for modules offering search capabilities. Forked for Fusion.",
   "type": "drupal-module",
   "homepage": "https://www.drupal.org/project/search_api",
   "authors": [
