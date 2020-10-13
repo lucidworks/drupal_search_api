@@ -194,10 +194,11 @@ function template_preprocess_search_api_server(array &$variables) {
     $info = t('disabled (<a href=":url">enable</a>)', [':url' => $server->toUrl('enable')->toString()]);
   }
   // Append the row and reset variables.
-  $label = t('Status');
-  $classes[] = 'search-api-server-summary--status';
-  $rows[] = Utility::deepCopy($row);
-  $classes = [];
+  // LUCIDWORKS CHANGED
+  // $label = t('Status');
+  // $classes[] = 'search-api-server-summary--status';
+  // $rows[] = Utility::deepCopy($row);
+  // $classes = [];
 
   // Check if the backend used by the server is valid and get its label.
   if ($server->hasValidBackend()) {
@@ -208,12 +209,12 @@ function template_preprocess_search_api_server(array &$variables) {
     $classes[] = 'error';
     $info = t('Invalid or missing backend plugin: %backend_id', ['%backend_id' => $server->getBackendId()]);
   }
-
+  // LUCIDWORKS CHANGED
   // Append the row and reset variables.
-  $label = t('Backend class');
-  $classes[] = 'search-api-server-summary--backend';
-  $rows[] = Utility::deepCopy($row);
-  $classes = [];
+  // $label = t('Backend class');
+  // $classes[] = 'search-api-server-summary--backend';
+  // $rows[] = Utility::deepCopy($row);
+  // $classes = [];
 
   // Build the indexes links container.
   $indexes = [
@@ -229,13 +230,14 @@ function template_preprocess_search_api_server(array &$variables) {
     ];
   }
   // Check if the indexes variable contains links.
-  if ($indexes['#links']) {
-    $label = t('Search indexes');
-    $info = render($indexes);
-    $classes[] = 'search-api-server-summary--indexes';
-    $rows[] = Utility::deepCopy($row);
-    $classes = [];
-  }
+  // LUCIDWORKS CHANGED
+  // if ($indexes['#links']) {
+  //   $label = t('Search indexes');
+  //   $info = render($indexes);
+  //   $classes[] = 'search-api-server-summary--indexes';
+  //   $rows[] = Utility::deepCopy($row);
+  //   $classes = [];
+  // }
 
   // Add backend-specific additional information.
   foreach ($server->viewSettings() as $information) {
@@ -353,30 +355,30 @@ function template_preprocess_search_api_index(array &$variables) {
       $info = t('Invalid or missing datasource plugin: %datasource_id', ['%datasource_id' => $datasource_id]);
     }
     // Append the row and reset variables.
-    $label = t('Datasource');
-    $classes[] = 'search-api-index-summary--datasource';
-    $rows[] = Utility::deepCopy($row);
-    $classes = [];
+    // $label = t('Datasource');
+    // $classes[] = 'search-api-index-summary--datasource';
+    // $rows[] = Utility::deepCopy($row);
+    // $classes = [];
   }
 
   // Check if the tracker is valid.
-  if ($tracker) {
-    $info = $tracker->label();
-  }
-  else {
-    $classes[] = 'error';
-    $info = t('Invalid or missing tracker plugin: %tracker_id', ['%tracker_id' => $index->getTrackerId()]);
-  }
-  // Append the row and reset variables.
-  $label = t('Tracker');
-  $classes[] = 'search-api-index-summary--tracker';
-  $rows[] = Utility::deepCopy($row);
-  $classes = [];
+  // if ($tracker) {
+  //   $info = $tracker->label();
+  // }
+  // else {
+  //   $classes[] = 'error';
+  //   $info = t('Invalid or missing tracker plugin: %tracker_id', ['%tracker_id' => $index->getTrackerId()]);
+  // }
+  // // Append the row and reset variables.
+  // $label = t('Tracker');
+  // $classes[] = 'search-api-index-summary--tracker';
+  // $rows[] = Utility::deepCopy($row);
+  // $classes = [];
 
   // Check if a server is available.
   $classes[] = 'search-api-index-summary--server';
   if ($server) {
-    $label = t('Server');
+    $label = t('Fusion Server');
     $info = $server->toLink(NULL, 'canonical')->toString();
     $rows[] = Utility::deepCopy($row);
   }
@@ -390,11 +392,11 @@ function template_preprocess_search_api_index(array &$variables) {
 
   // Check if the index is enabled.
   if ($index->status()) {
-    $label = t('Server index status');
+    $label = t('Fusion index status');
     if (isset($variables['server_count'])) {
       $vars = [':url' => Url::fromUri('https://drupal.org/node/2009804#server-index-status')->toString()];
       // Build the server index status info.
-      $info = \Drupal::translation()->formatPlural($variables['server_count'], 'There is 1 item indexed on the server for this index. (<a href=":url">More information</a>)', 'There are @count items indexed on the server for this index. (<a href=":url">More information</a>)', $vars);
+      $info = \Drupal::translation()->formatPlural($variables['server_count'], 'There is 1 item indexed on the server for this index. (<a href=":url">More information</a>)', 'There are @count items indexed.', $vars);
     }
     else {
       $args = ['@message' => $variables['server_count_error']];
@@ -421,22 +423,22 @@ function template_preprocess_search_api_index(array &$variables) {
       $info = t('No items will be indexed during cron runs.');
     }
     // Append the row and reset variables.
-    $label = t('Cron batch size');
-    $classes[] = 'search-api-index-summary--cron-batch-size';
-    $rows[] = Utility::deepCopy($row);
-    $classes = [];
+    // $label = t('Cron batch size');
+    // $classes[] = 'search-api-index-summary--cron-batch-size';
+    // $rows[] = Utility::deepCopy($row);
+    // $classes = [];
 
     // Add the indexing progress bar.
-    if ($tracker) {
-      $indexed_count = $tracker->getIndexedItemsCount();
-      $total_count = $tracker->getTotalItemsCount();
+    // if ($tracker) {
+    //   $indexed_count = $tracker->getIndexedItemsCount();
+    //   $total_count = $tracker->getTotalItemsCount();
 
-      $variables['index_progress'] = [
-        '#theme' => 'progress_bar',
-        '#percent' => $total_count ? (int) (100 * $indexed_count / $total_count) : 100,
-        '#message' => t('@indexed/@total indexed', ['@indexed' => $indexed_count, '@total' => $total_count]),
-      ];
-    }
+    //   $variables['index_progress'] = [
+    //     '#theme' => 'progress_bar',
+    //     '#percent' => $total_count ? (int) (100 * $indexed_count / $total_count) : 100,
+    //     '#message' => t('@indexed/@total indexed', ['@indexed' => $indexed_count, '@total' => $total_count]),
+    //   ];
+    // }
   }
 
   // Append the index info table to the output.
