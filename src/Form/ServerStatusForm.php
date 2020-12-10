@@ -92,12 +92,13 @@ class ServerStatusForm extends FormBase {
       ];
     }
 
-    $form['actions']['#type'] = 'actions';
-    $form['actions']['clear'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Delete all indexed data on this server'),
-      '#button_type' => 'danger',
-    ];
+    // LUCIDWORKS CHANGE
+    // $form['actions']['#type'] = 'actions';
+    // $form['actions']['clear'] = [
+    //   '#type' => 'submit',
+    //   '#value' => $this->t('Delete all indexed data on this server'),
+    //   '#button_type' => 'danger',
+    // ];
     return $form;
   }
 

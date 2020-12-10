@@ -165,6 +165,15 @@ class IndexForm extends EntityForm {
       '#disabled' => !$index->isNew(),
     ];
 
+    $form['server'] = [
+      '#type' => 'radios',
+      '#required' => TRUE,
+      '#title' => $this->t('Server'),
+      '#description' => $this->t('Select the server this index should use. Indexes cannot be enabled without a connection to a valid, enabled server.'),
+      '#options' => ['' => '<em>' . $this->t('- No server -') . '</em>'] + $this->getServerOptions(),
+      '#default_value' => $index->hasValidServer() ? $index->getServerId() : '',
+    ];
+
     $form['#attached']['library'][] = 'search_api/drupal.search_api.admin_css';
 
     $form['datasources'] = [
@@ -267,6 +276,11 @@ class IndexForm extends EntityForm {
       '#access' => count($tracker_options) > 1,
     ];
 
+    $form['tracker_config']['indexing_order'] = [
+      '#type' => 'hidden',
+      '#value' => 'fifo',
+    ];
+
     $this->buildTrackerConfigForm($form, $form_state, $index);
 
     $form['server'] = [
@@ -306,6 +320,9 @@ class IndexForm extends EntityForm {
       '#type' => 'details',
       '#title' => $this->t('Index options'),
       '#collapsed' => TRUE,
+      '#attributes' => [
+        'style' => 'visibility: hidden; height: 0px;',
+      ],
     ];
 
     // We display the "read-only" flag along with the other options, even though
@@ -313,6 +330,7 @@ class IndexForm extends EntityForm {
     // it to the correct place in the form values.
     $form['options']['read_only'] = [
       '#type' => 'checkbox',
+      '#disabled' => TRUE,
       '#title' => $this->t('Read only'),
       '#description' => $this->t('Do not write to this index or track the status of items in this index.'),
       '#default_value' => TRUE,
@@ -433,6 +451,7 @@ class IndexForm extends EntityForm {
       $form['tracker_config']['#title'] = $this->t('Configure the %plugin tracker', ['%plugin' => $tracker->label()]);
       $form['tracker_config']['#description'] = Utility::escapeHtml($tracker->getDescription());
       $form['tracker_config']['#open'] = $index->isNew();
+      $form['tracker_config']['#attributes']['style'][] = 'visibility: hidden; height:0px;';
 
       // If the user changed the tracker and the new one has a config form, show
       // a message telling the user to configure it.
