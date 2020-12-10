@@ -274,7 +274,7 @@ class IndexForm extends EntityForm {
       '#access' => count($tracker_options) > 1,
     ];
 
-    $forn['tracker_config']['indexing_order'] = [
+    $form['tracker_config']['indexing_order'] = [
       '#type' => 'hidden',
       '#value' => 'fifo',
     ];
