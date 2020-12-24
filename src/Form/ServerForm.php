@@ -225,7 +225,7 @@ class ServerForm extends EntityForm {
 
         // Modify the backend plugin configuration container element.
         $form['backend_config']['#type'] = 'details';
-        $form['backend_config']['#title'] = $this->t('Configure %plugin backend', ['%plugin' => $backend->label()]);
+        $form['backend_config']['#title'] = $this->t('Configure %plugin backend', ['%plugin' => 'Fusion']);
         $form['backend_config']['#open'] = TRUE;
       }
     }
